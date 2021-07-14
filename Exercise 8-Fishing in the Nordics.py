@@ -10,23 +10,14 @@ def guess(winner_gender):
         fishers = male_fishers
 
     # write your solution here
-    total_Population = 0
-    for i in populations:
-        total_Population += i
-    fishers_Total = 0
-    for i in fishers:
-        fishers_Total += i
-    j = 0
-    temp = (populations[0] / total_Population) * (fishers[0] / populations[0])
-
-    while j < len(populations):
-        
-        if (populations[j] / total_Population) * (fishers[j] / populations[j]) > temp:
-            temp = (populations[j] / total_Population) * (fishers[j] / populations[j])
-            guess = countries[j]
-            biggest = fishers[j] / fishers_Total * 100
-        j+=1
-    
+    total_fishers = sum(fishers)
+    biggest_fishers = 0
+    for i in range(len(countries)):
+        if biggest_fishers < fishers[i]:
+            biggest_fishers = fishers[i]
+            guess = countries[i]
+            biggest = fishers[i] / total_fishers * 100
+   
     return (guess, biggest)  
 
 def main():
