@@ -13,21 +13,16 @@ input_string = '''
 np.set_printoptions(precision=1)    # this just changes the output settings for easier reading
  
 def fit_model(input_file):
-
+    # read the data in and fit it. the values below are placeholder values
     data = np.genfromtxt(input_file, skip_header=1)
-    c = np.asarray([])
-    x = np.asarray([])
-    y = np.asarray([])
 
-    i = len(data) - 1
-    while i >= 0:
-        last_element = data[i][-1]
-        y = np.insert(y, 0, last_element, axis = 0)
-        i-=1
-    c = data[:,:-1]
-    new = np.linalg.lstsq(c, y)[0]
-    print(new)
-    print(c @ new)
+    x = np.array([row[:-1] for row in data])
+    y = np.array([row[-1] for row in data])
+
+    c = np.linalg.lstsq(x, y)[0] # coefficients of the linear regression
+
+    print(c)
+    print(x @ c)
 
 # simulate reading a file
 input_file = StringIO(input_string)
