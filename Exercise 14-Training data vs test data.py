@@ -17,28 +17,25 @@ test_string = '''
 '''
 
 def main():
-    np.set_printoptions(precision=1)
+    np.set_printoptions(precision=1)    # this just changes the output settings for easier reading
 
-    data_train = np.genfromtxt(train, skip_header=1)
-    data_test = np.genfromtxt(test, skip_header=1)
+    # read in the training data and separate it to x_train and y_train
+    train_data = np.genfromtxt(StringIO(train_string), skip_header=1)
+    x_train = [row[:-1] for row in train_data]
+    y_train = [row[-1] for row in train_data]
+     
+    # fit a linear regression model to the data and get the coefficients
+    c = np.linalg.lstsq(x_train, y_train)[0]
 
-    x_train = data_train[:,:-1]
-    y_train = np.asarray([])
+    # read in the test data and separate x_test from it
+    test_data = np.genfromtxt(StringIO(test_string), skip_header=1)
+    x_test = np.asarray([row[:-1] for row in test_data])
 
-    i = len(data_train) - 1
-    while i >= 0:
-        last_element = data_train[i][-1]
-        y_train = np.insert(y_train, 0, last_element, axis = 0)
-        i-=1
+    # print out the linear regression coefficients
+    print(c)
 
-    x_test = data_test[:,:-1]
+    # this will print out the predicted prics for the two new cabins in the test data set
+    print(x_test @ c)
 
-    coeff = np.linalg.lstsq(x_train, y_train)[0]
-
-    print(coeff)
-    print(x_test @ coeff)
-
-train = StringIO(train_string)
-test = StringIO(test_string)
 
 main()
