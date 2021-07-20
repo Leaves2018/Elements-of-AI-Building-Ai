@@ -22,13 +22,11 @@ y = np.random.randint(0, N, tracks)
 def main():
     global x
     global y
-
     for step in range(steps):
         # add a temperature schedule here
-        T = max(0, ((steps - step)/steps)**3-.005)
+        T = max(0.0001, ((steps - step)/steps)**3-.005)
         # update solutions on each search track                                     
         for i in range(tracks):
-            
             # try a new solution near the current one                               
             x_new = np.random.randint(max(0, x[i]-2), min(N, x[i]+2+1))
             y_new = np.random.randint(max(0, y[i]-2), min(N, y[i]+2+1))
@@ -36,11 +34,11 @@ def main():
             S_new = h[x_new, y_new]
 
             # change this to use simulated annealing
-            if S_new > S_old:
+            if S_new >= S_old or random.random() < np.exp((S_new - S_old)/T):
                 x[i], y[i] = x_new, y_new   # new solution is better, go there       
             else:
-                if random.random() < (np.exp(-(S_old - S_new) / T)):                     # if the new solution is worse, do nothing
-                   x[i], y[i] = x_new, y_new  
+                pass                        # if the new solution is worse, do nothing
+
     # Number of tracks found the peak
     print(sum([x[j] == peak_x and y[j] == peak_y for j in range(tracks)])) 
 main()

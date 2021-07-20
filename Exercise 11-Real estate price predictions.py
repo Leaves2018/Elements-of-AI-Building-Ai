@@ -6,11 +6,10 @@ X = [[66, 5, 15, 2, 500],
 c = [3000, 200, -50, 5000, 100]    # coefficient values
 
 def predict(X, c):
-    price = 0 
-    for cabin in X:
-        for coefficient in c:
-            price += cabin[c.index(coefficient)]*coefficient
-        print(price)
+    for x in X:
         price = 0
-               
+        for i in range(len(x)):
+            price += x[i] * c[i]
+        print(price)
+
 predict(X, c)

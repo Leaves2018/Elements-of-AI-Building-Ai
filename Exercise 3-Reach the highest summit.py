@@ -13,14 +13,10 @@ def climb(x, h):
     # edit here
     while not summit:
         summit = True         # stop unless there's a way up
-        if h[x + 1] > h[x]:
-            x = x + 1         # right is higher, go there
-            summit = False    # and keep going
-        else:
-            for x_new in range(max(0, x-5), min(99, x+5)):
-                if h[x_new] > h[x]:
-                    summit = False
-                    x = x_new
+        for x_new in range(max(0, x-5), min(99, x+5)):    
+            if h[x_new] > h[x]:
+                x = x_new         # right is higher, go there
+                summit = False    # and keep going
     return x
 
 
@@ -28,6 +24,7 @@ def main(h):
     # start at a random place                                                                                  	 
     x0 = random.randint(1, 98)
     x = climb(x0, h)
+
     return x0, x
 
 main(h)

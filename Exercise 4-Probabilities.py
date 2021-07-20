@@ -1,14 +1,15 @@
 import random
 
 def main():
-    prob = random.random()
-    if prob < 0.1:
-        favourite = "bats"
-    if prob < 0.2 and prob > 0.1:
-        favourite = "cats"
-    if prob > 0.2:
+
+    x = random.random()
+    if x < 0.8:
         favourite = "dogs"
-      # change this
+    elif x < 0.9:
+        favourite = "cats"
+    else:
+        favourite = "bats"
+        
     print("I love " + favourite) 
 
 
